@@ -1,0 +1,27 @@
+===== Results for clang, L=2048, -O2 =====
+===== Program output =====
+./tiny_ising: Segmentation fault
+
+===== Performance statistics =====
+# started on Mon Mar 24 18:29:46 2025
+
+
+ Performance counter stats for './tiny_ising':
+
+              0.52 msec task-clock                       #    0.396 CPUs utilized             
+                 0      context-switches                 #    0.000 /sec                      
+                 0      cpu-migrations                   #    0.000 /sec                      
+                59      page-faults                      #  114.372 K/sec                     
+         1,711,855      cycles                           #    3.318 GHz                       
+           596,466      stalled-cycles-frontend          #   34.84% frontend cycles idle      
+         1,222,784      instructions                     #    0.71  insn per cycle            
+                                                  #    0.49  stalled cycles per insn   
+           276,903      branches                         #  536.779 M/sec                     
+            34,906      branch-misses                    #   12.61% of all branches           
+
+       0.001302130 seconds time elapsed
+
+       0.001452000 seconds user
+       0.000000000 seconds sys
+
+
