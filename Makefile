@@ -1,7 +1,7 @@
 CC +=
 CFLAGS += 
 LDFLAGS=-lm
-GL_LDFLAGS=-lGL -lglfw
+GL_LDFLAGS=-lGL -std=c11 -lglfw
 
 # Files
 TARGETS=tiny_ising demo

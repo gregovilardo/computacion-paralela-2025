@@ -1,7 +1,0 @@
-L,compiler,optimization,updates/ns
-512,icx,3,0.0938367
-512,clang,3,0.0878163
-512,nvcc,3,0.0858143
-1024,icx,3,0.094062
-1024,clang,3,0.0900317
-1024,nvcc,3,0.0855123

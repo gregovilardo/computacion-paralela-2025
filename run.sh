@@ -1,12 +1,12 @@
 #!/bin/bash
 
-COMPILERS=("icx" "clang" "nvcc")
+COMPILERS=("gcc" "clang")
 
 make clean
 
 mkdir pruebas
 updates="pruebas/updates.csv"
-echo "L,compiler,optimization,updates/ns" >$updates
+#echo "L,compiler,optimization,updates/ns" >$updates
 
 for n in {9..10}; do
     L=$((2 ** n))

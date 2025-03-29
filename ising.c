@@ -2,10 +2,13 @@
 
 #include <math.h>
 #include <stdlib.h>
+#define XOR32_MAX 4294967296.0f;
 
 
 void update(const float temp, int grid[L][L])
 {
+    static unsigned int prng_state = 123456789;
+    const float d = 1.0f / XOR32_MAX;
     // typewriter update
     for (unsigned int i = 0; i < L; ++i) {
         for (unsigned int j = 0; j < L; ++j) {
@@ -23,7 +26,14 @@ void update(const float temp, int grid[L][L])
             int h_after = -(spin_new * spin_neigh_n) - (spin_new * spin_neigh_e) - (spin_new * spin_neigh_w) - (spin_new * spin_neigh_s);
 
             int delta_E = h_after - h_before;
-            float p = rand() / (float)RAND_MAX;
+
+            unsigned int x = prng_state;
+            x ^= x << 13;
+            x ^= x >> 17;
+            x ^= x << 5;
+            prng_state = x;
+            float p = (float)x * d;
+
             if (delta_E <= 0 || p <= expf(-delta_E / temp)) {
                 grid[i][j] = spin_new;
             }
