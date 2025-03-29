@@ -37,6 +37,8 @@ struct statpoint {
     double m4;
 };
 
+double total_time;
+double nupdates;
 
 static void cycle(int grid[L][L],
                   const double min, const double max,
@@ -52,14 +54,20 @@ static void cycle(int grid[L][L],
 
         // equilibrium phase
         for (unsigned int j = 0; j < TRAN; ++j) {
+	    double start = wtime();
             update(temp, grid);
+	    total_time += wtime() - start;
+	    nupdates++;
         }
 
         // measurement phase
         unsigned int measurements = 0;
         double e = 0.0, e2 = 0.0, e4 = 0.0, m = 0.0, m2 = 0.0, m4 = 0.0;
         for (unsigned int j = 0; j < TMAX; ++j) {
+	    double start = wtime();
             update(temp, grid);
+	    total_time += wtime() - start;
+	    nupdates++;
             if (j % calc_step == 0) {
                 double energy = 0.0, mag = 0.0;
                 int M_max = 0;
@@ -130,7 +138,11 @@ int main(void)
     double start = wtime();
 
     // clear the grid
-    int grid[L][L] = { { 0 } };
+    int (*grid)[L] = malloc(sizeof(int[L][L]));
+    if (grid == NULL) {
+        fprintf(stderr, "Error, unable to allocate memory.\n");
+    	exit(EXIT_FAILURE);
+    }
     init(grid);
 
     // temperature increasing cycle
@@ -151,6 +163,16 @@ int main(void)
                stat[i].m2,
                stat[i].m4);
     }
+      printf("=====================\n");
+    float cells_ns = (L * L * nupdates) / (total_time * 1e9);
+    printf("cells/ns %f\n", cells_ns);
+
+    FILE *fptr;
+    fptr = fopen("out", "a");
+    fprintf(fptr, "%f\n", cells_ns);
+    fclose(fptr);
+
+    free(grid);
 
     return 0;
 }

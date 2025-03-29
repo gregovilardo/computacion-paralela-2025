@@ -3,6 +3,9 @@ demo
 *.o
 # Prerequisites
 *.d
+*.s
+*.i
+*perf
 
 # Object files
 *.o
